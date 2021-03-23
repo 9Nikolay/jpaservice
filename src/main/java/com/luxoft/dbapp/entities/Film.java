@@ -1,7 +1,7 @@
 package com.luxoft.dbapp.entities;
 
-import com.luxoft.dbapp.converter.LocalDateTimeStampConverter;
-import com.luxoft.dbapp.converter.RatingAttributeConverter;
+import com.luxoft.dbapp.converters.LocalDateTimeStampConverter;
+import com.luxoft.dbapp.converters.RatingStringConverter;
 import com.luxoft.dbapp.enums.Rating;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,7 +42,7 @@ public class Film implements Serializable {
     private Short length;
     @Column(name = "replacement_cost", nullable = false)
     private BigDecimal replacementCost;
-    @Convert(converter = RatingAttributeConverter.class)
+    @Convert(converter = RatingStringConverter.class)
     @Column
     private Rating rating;
     @Column(name = "special_features")

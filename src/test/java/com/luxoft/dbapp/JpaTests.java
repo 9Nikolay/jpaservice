@@ -1,6 +1,6 @@
-package customjdbc;
+package com.luxoft.dbapp;
 
-import com.luxoft.dbapp.config.DbConfig;
+import com.luxoft.dbapp.dao.ActorDao;
 import com.luxoft.dbapp.dao.FilmDao;
 import com.luxoft.dbapp.dao.LanguageDao;
 import com.luxoft.dbapp.entities.Actor;
@@ -9,25 +9,29 @@ import com.luxoft.dbapp.entities.FilmActor;
 import com.luxoft.dbapp.entities.Language;
 import com.luxoft.dbapp.enums.Rating;
 import com.luxoft.dbapp.keys.ActorFilmKey;
-import com.luxoft.dbapp.service.FilmService;
+import com.luxoft.dbapp.services.FilmService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class CustomjdbcApplicationTests {
+class JpaTests {
 
 	private static AnnotationConfigApplicationContext ctx;
 	private static FilmService filmService;
 	private static LanguageDao languageDao;
 	private static FilmDao filmDao;
+	private static ActorDao actorDao;
 
 	private static final String TITLE = "ACADEMY DINOSAUR";
 
@@ -37,16 +41,44 @@ class CustomjdbcApplicationTests {
 		filmService = ctx.getBean(FilmService.class);
 		languageDao = ctx.getBean(LanguageDao.class);
 		filmDao = ctx.getBean(FilmDao.class);
+		actorDao = ctx.getBean(ActorDao.class);
+		saveActors();
+	}
+
+	private static void saveActors(){
+		try(Stream<String> inputStream = Files.lines(
+				Paths.get("src/test/resources/db/sakila-data.sql")
+		)){
+			inputStream
+					.dropWhile(str -> !str.startsWith("INSERT INTO actor VALUES"))
+					.takeWhile(str -> !str.startsWith("COMMIT"))
+					.map(str -> str.substring(str.indexOf("(") + 1, str.indexOf(")")))
+					.peek(str -> {
+						String[] arr = str.split(",");
+						String date = arr[3].substring(1, arr[3].length() - 1);
+						String firstName = arr[1].substring(1, arr[1].length() - 1);
+						String lastName = arr[2].substring(1, arr[2].length() - 1);
+						actorDao.save(new Actor(Long.valueOf(arr[0]), firstName, lastName, LocalDateTime.parse(
+								date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+						)));
+					})
+					.forEach(System.out::println);
+		}
+		catch (IOException e){
+			Assertions.fail(e.getCause());
+		}
 	}
 
 	@Test
 	public void test(){
+		Assertions.assertEquals(200, actorDao.count());
+
 		Language language = new Language();
 		language.setLanguageId(1L);
 		language.setName("French");
 		language.setLastUpdate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 		languageDao.save(language);
-		assertEquals(1, languageDao.count());
+		Assertions.assertEquals(1, languageDao.count());
 
 		Film film = new Film();
 		film.setFilmId(9999L);
@@ -64,8 +96,8 @@ class CustomjdbcApplicationTests {
 		film.setLastUpdate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 		filmService.saveFilm(film);
 		List<Film> savedFilms = filmDao.findByTitle(TITLE);
-		assertEquals(1, savedFilms.size());
-		assertEquals(film, savedFilms.get(0));
+		Assertions.assertEquals(1, savedFilms.size());
+		Assertions.assertEquals(film, savedFilms.get(0));
 
 		Actor actor = new Actor();
 		actor.setActorIid(9999L);
@@ -84,6 +116,6 @@ class CustomjdbcApplicationTests {
 
 		List<String> descriptions = filmService.findAllByNativeQuery();
 
-		assertEquals(1, descriptions.size());
+		Assertions.assertEquals(1, descriptions.size());
 	}
 }

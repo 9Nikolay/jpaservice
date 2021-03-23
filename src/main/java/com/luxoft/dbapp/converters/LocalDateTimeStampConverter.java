@@ -1,11 +1,10 @@
-package com.luxoft.dbapp.converter;
+package com.luxoft.dbapp.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 @Converter
 public class LocalDateTimeStampConverter implements AttributeConverter<LocalDateTime, Timestamp> {

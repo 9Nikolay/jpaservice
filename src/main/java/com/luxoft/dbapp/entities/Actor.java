@@ -1,6 +1,6 @@
 package com.luxoft.dbapp.entities;
 
-import com.luxoft.dbapp.converter.LocalDateTimeStampConverter;
+import com.luxoft.dbapp.converters.LocalDateTimeStampConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -40,5 +39,15 @@ public class Actor implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(actorIid, firstName, lastName, lastUpdate);
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "actorIid=" + actorIid +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                '}';
     }
 }

@@ -1,11 +1,9 @@
-package com.luxoft.dbapp.serviceimpl;
+package com.luxoft.dbapp.servicesimpl;
 
 import com.luxoft.dbapp.dao.LanguageDao;
 import com.luxoft.dbapp.entities.Film;
 import com.luxoft.dbapp.entities.FilmActor;
-import com.luxoft.dbapp.service.FilmService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.luxoft.dbapp.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;

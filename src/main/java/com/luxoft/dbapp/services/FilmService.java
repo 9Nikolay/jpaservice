@@ -1,8 +1,7 @@
-package com.luxoft.dbapp.service;
+package com.luxoft.dbapp.services;
 
 import com.luxoft.dbapp.entities.Film;
 import com.luxoft.dbapp.entities.FilmActor;
-import com.luxoft.dbapp.entities.Language;
 
 import java.util.List;
 

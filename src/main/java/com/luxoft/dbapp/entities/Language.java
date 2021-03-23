@@ -1,6 +1,6 @@
 package com.luxoft.dbapp.entities;
 
-import com.luxoft.dbapp.converter.LocalDateTimeStampConverter;
+import com.luxoft.dbapp.converters.LocalDateTimeStampConverter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

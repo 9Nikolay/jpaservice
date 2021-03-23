@@ -1,7 +1,6 @@
 package com.luxoft.dbapp.entities;
 
-import com.luxoft.dbapp.converter.LocalDateTimeStampConverter;
-import com.luxoft.dbapp.converter.RatingAttributeConverter;
+import com.luxoft.dbapp.converters.LocalDateTimeStampConverter;
 import com.luxoft.dbapp.keys.ActorFilmKey;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor

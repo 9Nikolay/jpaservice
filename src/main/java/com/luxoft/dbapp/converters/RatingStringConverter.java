@@ -1,4 +1,4 @@
-package com.luxoft.dbapp.converter;
+package com.luxoft.dbapp.converters;
 
 import com.luxoft.dbapp.enums.Rating;
 
@@ -7,19 +7,21 @@ import javax.persistence.Converter;
 
 
 @Converter
-public class RatingAttributeConverter implements AttributeConverter<Rating, String> {
+public class RatingStringConverter implements AttributeConverter<Rating, String> {
 
     @Override
     public String convertToDatabaseColumn(Rating attribute) {
-        if (attribute == null)
+        if (attribute == null) {
             return null;
+        }
         return attribute.getDesc();
     }
 
     @Override
     public Rating convertToEntityAttribute(String dbData) {
-        if (dbData == null)
+        if (dbData == null) {
             return null;
+        }
         for (Rating rating : Rating.values()) {
             if (rating.getDesc().equals(dbData)) {
                 return rating;
