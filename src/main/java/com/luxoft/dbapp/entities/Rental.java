@@ -1,13 +1,12 @@
 package com.luxoft.dbapp.entities;
 
+import com.luxoft.dbapp.converters.LocalDateTimeStampConverter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -15,18 +14,23 @@ import java.util.Date;
 @Entity
 public class Rental implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rental_id")
-    private Integer rentalId;
+    private Long rentalId;
+    @Convert(converter = LocalDateTimeStampConverter.class)
     @Column(name = "rental_date")
-    private Date rentalDate;
+    private LocalDateTime rentalDate;
+    @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-    @JoinColumn(name = "customer_id")
-    private Customer customerId;
+    @Column(name = "customer_id")
+    private Integer customerId;
+    @Convert(converter = LocalDateTimeStampConverter.class)
     @Column(name = "return_date")
-    private Date returnDate;
-    @JoinColumn(name = "staff_id")
-    private Staff staff;
+    private LocalDateTime returnDate;
+    @Column(name = "staff_id")
+    private Long staff;
+    @Convert(converter = LocalDateTimeStampConverter.class)
     @Column(name = "last_update")
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 }

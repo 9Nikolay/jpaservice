@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Person List</title>
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.css"
+          rel="stylesheet">
+</head>
+<body>
+<h2>Список арендованных фильмов пользователя:</h2>
+<br>
+   <div>
+   <table class="table table-bordered table-striped">
+       <thead>
+       <tr>
+           <th scope="col">rentalId</th>
+           <th scope="col">rentalDate</th>
+           <th scope="col">film</th>
+           <th scope="col">customerId</th>
+           <th scope="col">returnDate</th>
+           <th scope="col">staff</th>
+           <th scope="col">lastUpdate</th>
+       </tr>
+       </thead>
+       <tbody>
+            <tr th:each ="rent : ${rents}">
+                 <td th:text="${rent.rentalId}"></td>
+                 <td th:text="${rent.rentalDate}"></td>
+                 <td th:text="${rent.inventory.film.title}"></td>
+                 <td th:text="${rent.customerId}"></td>
+                 <td th:text="${rent.returnDate}"></td>
+                 <td th:text="${rent.staff}"></td>
+                 <td th:text="${rent.lastUpdate}"></td>
+            </tr>
+       </tbody>
+   </table>
+   </div>
+
+</body>
+</html>

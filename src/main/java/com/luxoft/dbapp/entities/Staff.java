@@ -1,18 +1,19 @@
 package com.luxoft.dbapp.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(exclude="store")
+@ToString(exclude = "store")
 public class Staff implements Serializable {
     @Id
     @Column(name = "staff_id")
@@ -21,12 +22,15 @@ public class Staff implements Serializable {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "picture")
     private byte[] picture;
     @Column(name = "email")
     private String email;
+    //@ToString.Exclude
+    @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
     @Column(name = "active")

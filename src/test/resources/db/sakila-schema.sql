@@ -40,6 +40,25 @@ USE sakila;
 --
 -- Table structure for table `actor`
 --
+CREATE TABLE authority (
+  id SMALLINT UNSIGNED NOT NULL,
+  role VARCHAR(45) NOT NULL,
+  PRIMARY KEY  (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE users (
+  id SMALLINT UNSIGNED NOT NULL,
+  user_name VARCHAR(45) NOT NULL,
+  password VARCHAR(70) NOT NULL,
+  email VARCHAR(45),
+  PRIMARY KEY  (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE user_authority (
+  user_id SMALLINT UNSIGNED NOT NULL,
+  authority_id SMALLINT UNSIGNED NOT NULL,
+  PRIMARY KEY  (user_id,authority_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE actor (
   actor_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,

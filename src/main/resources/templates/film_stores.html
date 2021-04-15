@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Person List</title>
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.css"
+          rel="stylesheet">
+</head>
+<body>
+<h2>Список доступных пунктов аренды фильма:</h2>
+<br>
+   <div>
+   <table class="table table-bordered table-striped">
+       <thead>
+       <tr>
+           <th scope="col">inventoryId</th>
+           <th scope="col">film</th>
+           <th scope="col">store</th>
+           <th scope="col">last_update</th>
+       </tr>
+       </thead>
+       <tbody>
+            <tr th:each ="inventory : ${inventors}">
+                 <td th:text="${inventory.inventoryId}"></td>
+                 <td th:text="${inventory.film.title}"></td>
+                 <td th:text="${inventory.store}"></td>
+                 <td th:text="${inventory.lastUpdate}"></td>
+                <!--кнопка бронирования фильма-->
+                <td>
+                    <form th:action="@{/rent_movie}" method="post" th:object="${inventoryFound}">
+                        <input type="hidden" name="inventoryId" th:value="${inventory.inventoryId}">
+                        <button type="submit" value="Submit" class="btn btn-danger">Забронировать фильм</button>
+                    </form>
+                </td>
+            </tr>
+       </tbody>
+   </table>
+   </div>
+
+</body>
+</html>

@@ -27,6 +27,7 @@ public class Address implements Serializable {
     private String postalCode;
     @Column(nullable = false)
     private String phone;
+    String location;
     @Column(name = "last_update", nullable = false)
     private Date lastUpdate;
 }

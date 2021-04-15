@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="webjars/bootstrap/4.6.0/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+<form th:action="@{/save_film}" th:object="${film}" method="post">
+    Title: <input class="form-text text-muted" type="text" th:field="*{title}"/>
+    Description: <input class="form-text text-muted" type="text" th:field="*{description}"/>
+    releaseYear: <input class="form-text text-muted" type="text" th:field="*{releaseYear}"/>
+    languageName: <label class="form-text text-muted" type="text"/>
+    <select class="form-control" required="required" th:field="*{languageId}">
+        <option th:each="language : ${languages}"
+                th:value="${language.languageId}"
+                th:text="${language.name}" ></option>
+    </select>
+    rentalDuration: <input class="form-text text-muted" type="text" th:field="*{rentalDuration}"/>
+    rentalRate: <input class="form-text text-muted" type="text" th:field="*{rentalRate}"/>
+    length: <input class="form-text text-muted" type="text" th:field="*{length}"/>
+    replacementCost: <input class="form-text text-muted" type="text" th:field="*{replacementCost}"/>
+    rating: <input class="form-text text-muted" type="text" th:field="*{rating}"/>
+    specialFeatures: <input class="form-text text-muted" type="text" th:field="*{specialFeatures}"/>
+    lastUpdate: <input class="form-text text-muted" type="text" th:field="*{lastUpdate}"/>
+    <input type="submit" th:value="Save">
+    <input type="reset" name="reset" value="Reset"/>
+</form>
+
+</body>
+</html>

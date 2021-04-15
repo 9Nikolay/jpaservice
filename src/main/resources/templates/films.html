@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Person List</title>
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.css"
+          rel="stylesheet">
+</head>
+<body>
+<h2>Список фильмов, доступных в пунктах выдачи:</h2>
+<br>
+<br>
+   <div>
+   <table class="table table-bordered table-striped">
+       <thead>
+       <tr>
+           <th scope="col">filmId</th>
+           <th scope="col">title</th>
+           <th scope="col">description</th>
+           <th scope="col">releaseYear</th>
+           <th scope="col">language</th>
+           <th scope="col">rentalDuration</th>
+           <th scope="col">rentalRate</th>
+           <th scope="col">length</th>
+           <th scope="col">replacementCost</th>
+           <th scope="col">rating</th>
+           <th scope="col">specialFeatures</th>
+           <th scope="col">lastUpdate</th>
+       </tr>
+       </thead>
+       <tbody>
+            <tr th:each ="film : ${allFilms}">
+                 <td th:text="${film.filmId}"></td>
+                 <td th:text="${film.title}"></td>
+                 <td th:text="${film.description}"></td>
+                 <td th:text="${film.releaseYear}"></td>
+                 <td th:text="${film.languageId.name}"></td>
+                 <td th:text="${film.rentalDuration}"></td>
+                 <td th:text="${film.rentalRate}"></td>
+                 <td th:text="${film.length}"></td>
+                 <td th:text="${film.replacementCost}"></td>
+                 <td th:text="${film.rating}"></td>
+                 <td th:text="${film.specialFeatures}"></td>
+                 <td th:text="${film.lastUpdate}"></td>
+                <!--кнопка для просмотра пунктов выдачи дисков с этим фильмом-->
+                <td>
+                    <form th:action="@{/show_film_stores}" method="post" th:object="${filmFound}">
+                        <input type="hidden" name="filmId" th:value="${film.filmId}">
+                        <input type="hidden" name="title" th:value="${film.title}">
+                        <button type="submit" value="Submit" class="btn btn-danger">Show Stores</button>
+                    </form>
+                </td>
+            </tr>
+       </tbody>
+   </table>
+   </div>
+
+   <br>
+   <!--Pagination-->
+   <div class="mx-4">
+       <b>Страницы:</b>
+   </div>
+   <ul class="nav nav-pills">
+       <li class="nav-item" th:each="pageNumber : ${pageNumbers}">
+           <a th:href="${'/films/' + pageNumber}" th:text="${pageNumber}" class="nav-link"></a>
+       </li>
+   </ul>
+
+</body>
+</html>

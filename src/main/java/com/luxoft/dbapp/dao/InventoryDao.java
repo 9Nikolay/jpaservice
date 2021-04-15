@@ -1,20 +1,17 @@
 package com.luxoft.dbapp.dao;
 
-import com.luxoft.dbapp.entities.Country;
+import com.luxoft.dbapp.entities.Inventory;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface InventoryDao {
-    Country save(Country Country);
+public interface InventoryDao extends PagingAndSortingRepository<Inventory, Long> {
 
-    Optional<Country> findById(Long id);
+    List<Inventory> getAllByFilm_filmId(Long filmId);
 
-    List<Country> findAll();
-
-    long count();
-
-    void delete(Country Country);
-
-    boolean existsById(Long id);
+    @Query(value = "select i from Inventory i where i.inventoryId not in" +
+            " (select r.inventory.inventoryId from Rental r where r.returnDate is null group by r.inventory.inventoryId)" +
+            " and i.film.filmId = ?1")
+    List<Inventory> getAvailableInventoriesByFilmId(Long filmId);
 }

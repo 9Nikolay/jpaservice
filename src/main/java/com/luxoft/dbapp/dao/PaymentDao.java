@@ -1,20 +1,12 @@
 package com.luxoft.dbapp.dao;
 
-import com.luxoft.dbapp.entities.Country;
+import com.luxoft.dbapp.entities.Payment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface PaymentDao {
-    Country save(Country Country);
-
-    Optional<Country> findById(Long id);
-
-    List<Country> findAll();
-
-    long count();
-
-    void delete(Country Country);
-
-    boolean existsById(Long id);
+public interface PaymentDao extends JpaRepository<Payment, Long> {
+    @Query("select p from Payment p where p.rental.inventory.film.filmId=1")
+    List<Payment> findPaymentsByFilmId(Long filmId);
 }

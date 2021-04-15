@@ -13,7 +13,7 @@ import java.util.Date;
 public class Customer implements Serializable {
     @Id
     @Column(name = "customer_id", nullable = false)
-    private Short customerId;
+    private Integer customerId;
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;

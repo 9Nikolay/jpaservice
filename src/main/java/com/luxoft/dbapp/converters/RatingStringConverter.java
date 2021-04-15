@@ -4,30 +4,28 @@ import com.luxoft.dbapp.enums.Rating;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Converter
 public class RatingStringConverter implements AttributeConverter<Rating, String> {
 
+    private static final Map<String, Rating> STRING_RATING_MAP =
+            Arrays.stream(Rating.values()).collect(Collectors.toMap(r -> r.getDesc(), r -> r));
+
     @Override
-    public String convertToDatabaseColumn(Rating attribute) {
-        if (attribute == null) {
+    public String convertToDatabaseColumn(Rating rating) {
+        if (rating == null) {
             return null;
         }
-        return attribute.getDesc();
+        return rating.getDesc();
     }
 
     @Override
     public Rating convertToEntityAttribute(String dbData) {
-        if (dbData == null) {
-            return null;
-        }
-        for (Rating rating : Rating.values()) {
-            if (rating.getDesc().equals(dbData)) {
-                return rating;
-            }
-        }
-        throw new IllegalArgumentException(dbData + " not supported.");
+        return STRING_RATING_MAP.get(dbData);
     }
 
 }

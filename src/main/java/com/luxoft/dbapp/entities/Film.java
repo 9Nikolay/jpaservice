@@ -17,9 +17,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 public class Film implements Serializable {
-    public static final String FIND_ALL = "FindAll";
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", nullable = false)
     private Long filmId;
     @Column(nullable = false)
@@ -33,13 +32,13 @@ public class Film implements Serializable {
     private Language languageId;
     @ManyToOne
     @JoinColumn(name = "original_language_id")
-    private Language originalLanguage_id;
+    private Language originalLanguageId;
     @Column(name = "rental_duration", nullable = false)
-    private Byte rentalDuration;
+    private Long rentalDuration;
     @Column(name = "rental_rate", nullable = false)
     private BigDecimal rentalRate;
     @Column
-    private Short length;
+    private Long length;
     @Column(name = "replacement_cost", nullable = false)
     private BigDecimal replacementCost;
     @Convert(converter = RatingStringConverter.class)
@@ -57,12 +56,12 @@ public class Film implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Film film = (Film) o;
          boolean b = Objects.equals(filmId, film.filmId) && Objects.equals(title, film.title) && Objects.equals(description, film.description) && Objects.equals(releaseYear, film.releaseYear) ;
-         b = b && Objects.equals(languageId, film.languageId) && Objects.equals(originalLanguage_id, film.originalLanguage_id) && Objects.equals(rentalDuration, film.rentalDuration) && Objects.equals(rentalRate, film.rentalRate) && Objects.equals(length, film.length) && Objects.equals(replacementCost, film.replacementCost) && rating == film.rating && Objects.equals(specialFeatures, film.specialFeatures) && Objects.equals(lastUpdate, film.lastUpdate);
+         b = b && Objects.equals(languageId, film.languageId) && Objects.equals(originalLanguageId, film.originalLanguageId) && Objects.equals(rentalDuration, film.rentalDuration) && Objects.equals(rentalRate, film.rentalRate) && Objects.equals(length, film.length) && Objects.equals(replacementCost, film.replacementCost) && rating == film.rating && Objects.equals(specialFeatures, film.specialFeatures) && Objects.equals(lastUpdate, film.lastUpdate);
     return b;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(filmId, title, description, releaseYear, languageId, originalLanguage_id, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
+        return Objects.hash(filmId, title, description, releaseYear, languageId, originalLanguageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
     }
 }
