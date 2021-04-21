@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    JpaUserDetailsService jpaUserDetailsService;
+    private JpaUserDetailsService jpaUserDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {

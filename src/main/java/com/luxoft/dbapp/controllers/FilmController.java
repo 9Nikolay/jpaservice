@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,12 @@ import java.util.stream.IntStream;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class FilmController {
 
-    FilmDao filmDao;
-    InventoryDao inventoryDao;
-    LanguageDao languageDao;
-    RentalDao rentalDao;
-    UserDao userDao;
-    PaymentDao paymentDao;
+    private FilmDao filmDao;
+    private InventoryDao inventoryDao;
+    private LanguageDao languageDao;
+    private RentalDao rentalDao;
+    private UserDao userDao;
+    private PaymentDao paymentDao;
 
     /**
      * Домашняя страница
@@ -155,13 +156,11 @@ public class FilmController {
      * @return
      */
     @RequestMapping("/rent_movie")
-    public String rentMovie(@ModelAttribute("inventoryFound") Inventory inventory, Model model) {
+    public String rentMovie(@ModelAttribute("inventoryFound") Inventory inventory, Model model, Principal principal) {
         Rental rental = new Rental();
         rental.setRentalDate(LocalDateTime.now());
         rental.setInventory(inventory);
-        org.springframework.security.core.userdetails.User user =
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer userId = userDao.findByUsername(user.getUsername()).get().getId();
+        Integer userId = userDao.findByUsername(principal.getName()).get().getId();
         rental.setCustomerId(userId);
         rental.setReturnDate(null);
         rental.setLastUpdate(LocalDateTime.now());
